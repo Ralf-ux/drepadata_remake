@@ -1,0 +1,311 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* === Root Variables === */
+:root {
+  --primary-color: #d32f2f;
+  --primary-dark: #b71c1c;
+  --error-color: #dc3545;
+  --light-bg: #ffffff;
+  --text-dark: #212529;
+  --input-bg: #e9ecef;
+}
+
+/* === Global Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:linear-gradient(135deg, #eb676796 100%, #A52A2A 100%); /* Dark red background same as signup */
+  position: relative;
+}
+
+.return-arrow {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 1.8rem;
+  color: white;
+  cursor: pointer;
+  z-index: 10000;
+  transition: color 0.3s ease;
+}
+
+.return-arrow:hover {
+  color: #d32f2f;
+}
+
+.login-message {
+  margin-bottom: 10px;
+  margin-right: 30px;
+  font-size: 20px;
+  color: white;
+  width: 400px;
+  padding: 20px 15px;
+}
+
+/* === Animation Container === */
+.animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -1;
+  opacity: 0.25;
+}
+
+/* === DNA Strands and Blood Cells Animation === */
+.dna-strand {
+  stroke: #d32f2f;
+  stroke-width: 3;
+  fill: none;
+  animation: dnaWave 10s ease-in-out infinite;
+}
+
+.blood-cell {
+  fill: #b71c1c;
+  opacity: 0.5;
+  animation: float 15s ease-in-out infinite;
+}
+
+@keyframes dnaWave {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-40px) scaleY(1.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); opacity: 0.5; }
+  25% { transform: translate(50px, -60px); opacity: 0.8; }
+  50% { transform: translate(-30px, 80px); opacity: 0.4; }
+  75% { transform: translate(60px, 40px); opacity: 0.7; }
+}
+
+.dna-strand:nth-child(2) { animation-delay: -2s; }
+.dna-strand:nth-child(3) { animation-delay: -4s; }
+.dna-strand:nth-child(4) { animation-delay: -6s; }
+.blood-cell:nth-child(5) { animation-delay: -3s; }
+.blood-cell:nth-child(6) { animation-delay: -6s; }
+.blood-cell:nth-child(7) { animation-delay: -9s; }
+.blood-cell:nth-child(8) { animation-delay: -12s; }
+
+/* === Container === */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 20px;
+  position: relative;
+  z-index: 10;
+}
+
+/* === Message Section === */
+.login-message {
+  position: fixed;
+  top: 20%;
+  left: 20px;
+  width: 700px;
+  max-width: 300px;
+  padding: 25px 25px;
+  background-color: transparent;
+  border-radius: 16px;
+  z-index: 20;
+  color: white;
+  margin-left: 34px;
+  
+}
+.login-message h2{
+  font-size: 24px;
+  width: 800px;
+  max-width:700px;
+  font-size: 47px;
+  color: #d32f2f;
+}
+.login-message p{
+  width: 800px;
+  max-width:700px;
+  font-size: 24px;
+  color: #f8f2f2;
+}
+.message-highlight span{
+  width: 900px;
+ 
+}
+#span{
+  width: 400px;
+  font-size: 16px; 
+  margin-top: 12px; 
+  max-width:800px;
+}
+/* === Form Card === */
+.login-form-card {
+  width: 500px;
+  padding: 42px;
+  background-color: var(--light-bg);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+  position: relative;
+}
+#connect{
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #b71c1c;
+}
+/* === Form === */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* === Form Group === */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.form-group input {
+  padding: 12px;
+  font-size: 1rem;
+  color: var(--text-dark);
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 8px rgba(211, 47, 47, 0.2);
+}
+
+.form-group input[aria-invalid="true"] {
+  border-color: var(--error-color);
+}
+
+/* === Password Field === */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper button.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.password-wrapper button.toggle-password:hover {
+  color: var(--primary-color);
+}
+
+/* === Form Messages === */
+#form-messages {
+  position: fixed;
+  top: 20%;
+  left: 20px;
+  max-width: 300px;
+  z-index: 10000;
+  color: white;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* === Submit Button === */
+button[type="submit"] {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.4);
+}
+
+button[type="submit"]:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* === Links === */
+.signup-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+}
+
+.signup-link a {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.signup-link a:hover {
+  color: var(--primary-dark);
+  text-decoration: underline;
+}
+
+/* === Footer === */
+.footer {
+  background-color: #121212;
+  color: #ccc;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.9rem;
+}
+
+/* === Return Button === */
+.return-button {
+  display: inline-block;
+  background-color: #b71c1c;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
+}
+
+.return-button:hover,
+.return-button:focus {
+  background-color: var(--primary-dark);
+  box-shadow: 0 6px 16px rgba(183, 28, 28, 0.6);
+  outline: none;
+}

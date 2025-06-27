@@ -1,0 +1,76 @@
+.loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loader-overlay[aria-live] {
+            aria-live: polite;
+            aria-label: "Chargement en cours";
+        }
+        .loader-moon {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #d32f2f;
+            border-radius: 50%;
+            border-right-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        body.blur {
+            filter: blur(5px);
+        }
+        .message-error {
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            padding: 0;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            color: white;
+            text-align: center;
+            background-color: #d32f2f;
+        }
+        .message-hidden {
+            opacity: 0;
+            height: 0;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+          
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .loader-moon {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #d32f2f;
+            border-radius: 50%;
+            border-right-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        body.blur {
+            filter: blur(5px);
+        }
