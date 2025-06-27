@@ -1018,72 +1018,301 @@ _________"></textarea>
 
             <!-- Step 10: Suivi trimestriel / Consultation -->
             <div class="step" data-step="10">
-                <h2 class="text-3xl font-semibold mb-6">Suivi trimestriel / Consultation</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="site_info" class="block text-base font-medium text-gray-700">Informations sur le site</label>
-                        <input type="text" id="site_info" name="site_info" class="mt-2 block w-full border-gray-300 shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="district_followup" class="block text-base font-medium text-gray-700">District</label>
-                        <input type="text" id="district_followup" name="district_followup" class="mt-2 block w-full border-gray-300 shadow-sm rounded-md focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="date_followup" class="block text-base font-medium text-gray-700">Date</label>
-                        <input type="date" id="date_followup" name="date_followup" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="poids" class="block text-base font-medium text-gray-700">Poids (kg)</label>
-                        <select id="poids" name="poids" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base">
-                            <option value="">--Sélectionner--</option>
-                            <?php for ($i = 30; $i <= 150; $i += 5): ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                            <?php endfor; ?>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="taille" class="block text-base font-medium text-gray-700">Taille (cm)</label>
-                        <select id="taille" name="taille" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base">
-                            <option value="">--Sélectionner--</option>
-                            <?php for ($i = 100; $i <= 220; $i += 5): ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                            <?php endfor; ?>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="ta" class="block text-base font-medium text-gray-700">TA</label>
-                        <input type="text" id="ta" name="ta" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="temperature" class="block text-base font-medium text-gray-700">Tº</label>
-                        <input type="text" id="temperature" name="temperature" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="tx" class="block text-base font-medium text-gray-700">Tx</label>
-                        <input type="text" id="tx" name="tx" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="hg" class="block text-base font-medium text-gray-700">Hg</label>
-                        <input type="text" id="hg" name="hg" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="crises_recentes" class="block text-base font-medium text-gray-700">Crises récentes</label>
-                        <input type="text" id="crises_recentes" name="crises_recentes" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="examens_cliniques" class="block text-base font-medium text-gray-700">Examens cliniques</label>
-                        <input type="text" id="examens_cliniques" name="examens_cliniques" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="traitement_en_cours" class="block text-base font-medium text-gray-700">Traitement en cours</label>
-                        <input type="text" id="traitement_en_cours" name="traitement_en_cours" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                    <div>
-                        <label for="remarques" class="block text-base font-medium text-gray-700">Remarques</label>
-                        <input type="text" id="remarques" name="remarques" class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-red-500 focus:border-red-500 p-3 text-base" />
-                    </div>
-                </div>
-            </div>
+    <h2 class="text-4xl font-bold mb-8 text-blue-700">Calendrier vaccinal du PEV</h2>
+    <form id="vaccination-calendar-form" action="save_vaccination_calendar.php" method="POST" novalidate class="bg-white shadow-lg rounded-lg p-6">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token'], ENT_QUOTES, 'UTF-8'); ?>" />
+        <table class="min-w-full border-collapse border-2 border-blue-500">
+            <thead>
+                <tr class="bg-blue-100">
+                    <th class="border-2 border-blue-500 px-6 py-4 text-left text-lg font-semibold text-red-600">Période</th>
+                    <th class="border-2 border-blue-500 px-6 py-4 text-left text-lg font-semibold text-red-600">Vaccin</th>
+                    <th class="border-2 border-blue-500 px-6 py-4 text-left text-lg font-semibold text-red-600">Voie d’administration</th>
+                    <th class="border-2 border-blue-500 px-6 py-4 text-left text-lg font-semibold text-red-600">Reçu Oui/Non</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Naissance -->
+                <tr class="hover:bg-blue-50">
+                    <td rowspan="1" class="border-2 border-blue-500 px-6 py-4 text-center align-middle text-gray-700 font-medium bg-blue-50">Naissance</td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[bcg][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">BCG</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[bcg][administration][]" value="Intra dermique" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra dermique</label>
+                        <label class="block"><input type="checkbox" name="vaccination[bcg][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[bcg][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[bcg][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <!-- Section Separator -->
+                <tr class="section-divider"><td colspan="4" class="border-t-4 border-blue-700"></td></tr>
+
+                <!-- 6 Semaines -->
+                <tr class="hover:bg-blue-50">
+                    <td rowspan="4" class="border-2 border-blue-500 px-6 py-4 text-center align-middle text-gray-700 font-medium bg-blue-50">6 Semaines</td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[six_weeks_dtchb1][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">DTC- Hep B+Hib 1</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[six_weeks_dtchb1][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[six_weeks_dtchb1][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[six_weeks_dtchb1][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[six_weeks_dtchb1][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[six_weeks_pneumo13_1][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">Pneumo 13-1</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[six_weeks_pneumo13_1][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[six_weeks_pneumo13_1][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[six_weeks_pneumo13_1][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[six_weeks_pneumo13_1][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[six_weeks_vpo1][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">VPO-1</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[six_weeks_vpo1][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[six_weeks_vpo1][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[six_weeks_vpo1][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[six_weeks_vpo1][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[six_weeks_rota1][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">ROTA-1</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[six_weeks_rota1][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[six_weeks_rota1][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[six_weeks_rota1][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[six_weeks_rota1][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <!-- Section Separator -->
+                <tr class="section-divider"><td colspan="4" class="border-t-4 border-blue-700"></td></tr>
+
+                <!-- 10 Semaines -->
+                <tr class="hover:bg-blue-50">
+                    <td rowspan="4" class="border-2 border-blue-500 px-6 py-4 text-center align-middle text-gray-700 font-medium bg-blue-50">10 Semaines</td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[ten_weeks_dtchb2][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">DTC- Hep B+Hib 2</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[ten_weeks_dtchb2][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[ten_weeks_dtchb2][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[ten_weeks_dtchb2][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[ten_weeks_dtchb2][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[ten_weeks_pneumo13_2][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">Pneumo 13-2</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[ten_weeks_pneumo13_2][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[ten_weeks_pneumo13_2][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[ten_weeks_pneumo13_2][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[ten_weeks_pneumo13_2][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[ten_weeks_vpo2][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">VPO-2</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[ten_weeks_vpo2][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[ten_weeks_vpo2][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[ten_weeks_vpo2][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[ten_weeks_vpo2][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[ten_weeks_rota2][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">ROTA-2</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[ten_weeks_rota2][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[ten_weeks_rota2][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[ten_weeks_rota2][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[ten_weeks_rota2][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <!-- Section Separator -->
+                <tr class="section-divider"><td colspan="4" class="border-t-4 border-blue-700"></td></tr>
+
+                <!-- 14 Semaines -->
+                <tr class="hover:bg-blue-50">
+                    <td rowspan="4" class="border-2 border-blue-500 px-6 py-4 text-center align-middle text-gray-700 font-medium bg-blue-50">14 Semaines</td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[fourteen_weeks_dtchb3][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">DTC- Hep B+Hib 3</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[fourteen_weeks_dtchb3][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[fourteen_weeks_dtchb3][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[fourteen_weeks_dtchb3][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[fourteen_weeks_dtchb3][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[fourteen_weeks_pneumo13_3][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">Pneumo 13-3</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[fourteen_weeks_pneumo13_3][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[fourteen_weeks_pneumo13_3][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[fourteen_weeks_pneumo13_3][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[fourteen_weeks_pneumo13_3][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[fourteen_weeks_vpo3][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">VPO-3</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[fourteen_weeks_vpo3][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[fourteen_weeks_vpo3][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[fourteen_weeks_vpo3][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[fourteen_weeks_vpo3][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[fourteen_weeks_rota3][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">ROTA-3</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[fourteen_weeks_rota3][administration][]" value="Intra musculaire" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Intra musculaire</label>
+                        <label class="block"><input type="checkbox" name="vaccination[fourteen_weeks_rota3][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[fourteen_weeks_rota3][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[fourteen_weeks_rota3][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <!-- Section Separator -->
+                <tr class="section-divider"><td colspan="4" class="border-t-4 border-blue-700"></td></tr>
+
+                <!-- 9 Mois -->
+                <tr class="hover:bg-blue-50">
+                    <td rowspan="3" class="border-2 border-blue-500 px-6 py-4 text-center align-middle text-gray-700 font-medium bg-blue-50">9 Mois</td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[nine_months_vita][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">Vit A</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[nine_months_vita][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                        <label class="block"><input type="checkbox" name="vaccination[nine_months_vita][administration][]" value="Sous cutanée" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Sous cutanée</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[nine_months_vita][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[nine_months_vita][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[nine_months_var][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">VAR</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[nine_months_var][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                        <label class="block"><input type="checkbox" name="vaccination[nine_months_var][administration][]" value="Sous cutanée" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Sous cutanée</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[nine_months_var][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[nine_months_var][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+                <tr class="hover:bg-blue-50">
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="flex items-center space-x-3">
+                            <input type="checkbox" name="vaccination[nine_months_vaa][vaccine]" class="h-5 w-5 text-blue-600 border-gray-300 rounded" /> 
+                            <span class="text-gray-800">VAA</span>
+                        </label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="checkbox" name="vaccination[nine_months_vaa][administration][]" value="Orale" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Orale</label>
+                        <label class="block"><input type="checkbox" name="vaccination[nine_months_vaa][administration][]" value="Sous cutanée" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Sous cutanée</label>
+                    </td>
+                    <td class="border-2 border-blue-500 px-6 py-4">
+                        <label class="block mb-2"><input type="radio" name="vaccination[nine_months_vaa][received]" value="Oui" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Oui</label>
+                        <label class="block"><input type="radio" name="vaccination[nine_months_vaa][received]" value="Non" class="h-5 w-5 text-blue-600 border-gray-300 rounded mr-2" /> Non</label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
 
 
             <!-- Navigation Buttons -->
